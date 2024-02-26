@@ -1,12 +1,30 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'tesWorkSpace'
+    }
+
+  }
   stages {
     stage('jenkinsfile') {
-      agent any
-      steps {
-        sh '''#!/bin/bash
+      parallel {
+        stage('jenkinsfile') {
+          agent any
+          steps {
+            sh '''#!/bin/bash
 
 echo "Created Blue Ocean Pipeline Successfully"'''
+          }
+        }
+
+        stage('test') {
+          steps {
+            sh '''#!/bin/bash
+
+echo "Hello BO"'''
+          }
+        }
+
       }
     }
 
